@@ -1,0 +1,29 @@
+syntax = "proto3";
+package whois.v1;
+
+option go_package = "gitlab.domsnail.ru/domsnail/core-api-lib/api/proto/node_manager/v1";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "google/openapiv2/annotations.proto";
+import "google/openapiv2/openapiv2.proto";
+import "hosts/v1/host.proto";
+import "whois/v1/whois.proto";
+
+service WhoisService {
+  // NewProbe creates new probing query and returns stream of results.
+  // Must contain original request uuid in metadata
+  rpc NewProbe(whois.v1.ProbeOptions) returns (stream WhoisInfo) {
+    option (google.api.http) = {
+      post: "/v1/whois/probe"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Создать WHOIS запрос"
+      description: "Отправляет задание на сканирование хостов из системы WHOIS"
+      tags: ["Node Manager", "WHOIS"]
+    };
+  };
+}
+

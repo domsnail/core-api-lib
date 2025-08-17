@@ -1,0 +1,16 @@
+syntax = "proto3";
+package whois.v1;
+
+option go_package = "gitlab.domsnail.ru/domsnail/core-api-lib/api/proto/whois/v1";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "hosts/v1/host.proto";
+import "whois/v1/whois.proto";
+
+service WhoisBotService {
+  // ProbeHost immediately starts whois query (manual use).
+  // production use is limited due to system passing new tasks through redis queues
+  rpc ProbeHost (ProbeOptions) returns (stream WhoisInfo) {}
+}

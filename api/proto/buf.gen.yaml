@@ -1,0 +1,22 @@
+version: v1
+plugins:
+  - plugin: go
+    out: ../../internal/services/grpc/go
+    opt: paths=source_relative
+  - plugin: go-grpc
+    out: ../../internal/services/grpc/go
+    opt: paths=source_relative,require_unimplemented_servers=false
+  - plugin: grpc-gateway
+    out: ../../internal/services/grpc/go
+    opt: paths=source_relative
+  - plugin: grpc-gateway-ts
+    out: ../../internal/services/grpc/ts
+    strategy: all
+  - name: openapiv2
+    path: C:/Users/ydlysak/go/bin/protoc-gen-openapiv2
+    strategy: all
+    out: ../docs
+    opt:
+      - allow_merge=true
+      - merge_file_name=domsnail
+      - generate_unbound_methods=false

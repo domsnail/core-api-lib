@@ -1,0 +1,26 @@
+syntax = "proto3";
+package whois.v1;
+
+option go_package = "gitlab.domsnail.ru/domsnail/core-api-lib/api/proto/node_manager/v1";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "hosts/v1/host.proto";
+import "bots/v1/bot.proto";
+
+service BotCoordinatorService {
+  // Connect is used by bots to establish connection to coordinator server
+  rpc Connect (BotCredentials) returns (ConnectionInfo) {}
+}
+
+message BotCredentials {
+  string api_key = 1;
+
+  string name = 2;
+}
+
+message ConnectionInfo {
+  string queue_pool = 1;
+  string queue_password = 2;
+}

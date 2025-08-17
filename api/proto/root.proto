@@ -1,0 +1,21 @@
+syntax = "proto3";
+package root.v1;
+
+option go_package = "gitlab.domsnail.ru/domsnail/core-api-lib/api/proto/root/v1";
+
+import "google/openapiv2/annotations.proto";
+import "google/openapiv2/openapiv2.proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Domsnail API"
+    version: "1.0.0"
+    description: "API для управления системой Threat Intelligence Domsnail"
+  }
+  schemes: HTTP
+  schemes: HTTPS
+  consumes: "application/json"
+  produces: "application/json"
+  base_path: "/api"
+  host: "0.0.0.0:80"
+};

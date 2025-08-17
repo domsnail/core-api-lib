@@ -1,0 +1,37 @@
+syntax = "proto3";
+package whois.v1;
+
+option go_package = "gitlab.domsnail.ru/domsnail/core-api-lib/api/proto/whois/v1";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "google/openapiv2/annotations.proto";
+import "google/openapiv2/openapiv2.proto";
+import "hosts/v1/host.proto";
+
+message ProbeOptions {
+  bool response_required = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    example: "false"
+    description: "Требуется ли синхронный ответ"
+  }];
+
+  repeated hosts.v1.Host hosts = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Список хостов для сканирования"
+  }];;
+}
+
+// notice: https://github.com/infobloxopen/protoc-gen-gorm
+
+message WhoisInfo {
+  string host = 1;
+  string raw_data = 2;
+  string source_server = 3;
+
+  // request uuid is stored in metadata
+
+  // redirected is used to link to data sourced from original whois server
+  optional WhoisInfo redirected = 5;
+
+  google.protobuf.Timestamp created_at = 6;
+}
