@@ -8,7 +8,7 @@ package v1
 
 import (
 	context "context"
-	v1 "github.com/domsnail/core-api-lib/api/proto/whois/v1"
+	v1 "github.com/domsnail/core-api-lib/api/gen/go/whois/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"

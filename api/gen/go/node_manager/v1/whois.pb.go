@@ -7,8 +7,8 @@
 package v1
 
 import (
-	_ "github.com/domsnail/core-api-lib/api/proto/hosts/v1"
-	v1 "github.com/domsnail/core-api-lib/api/proto/whois/v1"
+	_ "github.com/domsnail/core-api-lib/api/gen/go/hosts/v1"
+	v1 "github.com/domsnail/core-api-lib/api/gen/go/whois/v1"
 	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2/options"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"

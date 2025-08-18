@@ -14,7 +14,7 @@ import (
 	"io"
 	"net/http"
 
-	v1_2 "github.com/domsnail/core-api-lib/api/proto/whois/v1"
+	v1_2 "github.com/domsnail/core-api-lib/api/gen/go/whois/v1"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
 	"google.golang.org/grpc"
