@@ -1,16 +1,16 @@
 version: v1
 plugins:
   - plugin: go
-    out: ../../internal/services/grpc/go
+    out: ../gen/go
     opt: paths=source_relative
   - plugin: go-grpc
-    out: ../../internal/services/grpc/go
+    out: ../gen/go
     opt: paths=source_relative,require_unimplemented_servers=false
   - plugin: grpc-gateway
-    out: ../../internal/services/grpc/go
+    out: ../gen/go
     opt: paths=source_relative
   - plugin: grpc-gateway-ts
-    out: ../../internal/services/grpc/ts
+    out: ../gen/ts
     strategy: all
   - name: openapiv2
     path: C:/Users/ydlysak/go/bin/protoc-gen-openapiv2
