@@ -1,0 +1,4 @@
+syntax = "proto3";
+package domsnail.util.v1;
+
+option go_package = "github.com/domsnail/core-api-lib/gen/go/api/proto/util/v1;utilv1";

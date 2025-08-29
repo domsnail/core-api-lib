@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package domsnail.coordinator.v1;
+
+option go_package = "github.com/domsnail/core-api-lib/gen/go/api/proto/coordinator/v1;coordinatorv1";
+
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/api/annotations.proto";
+import "google/api/http.proto";
+
+import "api/proto/coordinator/v1/coordinator.proto";
+import "api/proto/probe/v1/probe.proto";
+import "api/proto/bot/v1/bot.proto";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/api.proto";
+
+// CoordinatorService is used to coordinate workload between node networks
+service CoordinatorService {
+  rpc BotConnect (bot.v1.BotCredentials) returns (bot.v1.BotConnectionInfo) {
+    option (google.api.http) = {
+      post: "/v1/bots/connect"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Connect bot";
+      description: "Binds bot to establish connection to coordination server";
+    };
+  }
+
+  rpc GetStatus(google.protobuf.Empty) returns (CoordinatorState) {
+    option (google.api.http) = {
+      get: "/v1/status"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get coordinator status";
+      description: "Returns coordinator status including bot connections, queue stats and other metrics";
+    };
+  }
+
+  rpc NewProbe (v1.GenericProbe) returns (v1.GenericProbeResponse) {
+    option (google.api.http) = {
+      put: "/v1/coordinator/probe"
+      body: "*"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Start new probe";
+      description: "Creates new probing task with variable type";
+    };
+  }
+
+  rpc NewProbes (v1.GenericProbes) returns (stream v1.GenericProbeResponse) {
+    option (google.api.http) = {
+      put: "/v1/coordinator/probes"
+      body: "*"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Start multiple new probes";
+      description: "Creates new probing tasks with variable types with stream";
+    };
+  }
+}

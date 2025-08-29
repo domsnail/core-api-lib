@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package domsnail.coordinator.v1;
+
+option go_package = "github.com/domsnail/core-api-lib/gen/go/api/proto/coordinator/v1;coordinatorv1";
+
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+import "api/proto/whois/v1/whois.proto";
+
+message CoordinatorState {
+  CoordinatorInfo info = 1;
+}
+
+message CoordinatorInfo {
+  string name = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Coordination server unique name."}];
+
+  CoordinatorMode mode = 2;
+}
+
+enum CoordinatorMode {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_enum) = {
+    title: "Work mode"
+    description: "Master mode enables child coordinators to be connected. Worker mode is always connected to master coordinator and accepts new tasks"
+  };
+
+  COORDINATOR_MODE_MASTER = 0;
+  COORDINATOR_MODE_WORKER = 1;
+}

@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package domsnail.bot.v1;
+
+option go_package = "github.com/domsnail/core-api-lib/gen/go/api/proto/bot/v1;botv1";
+
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+message BotsInfo {
+  repeated BotInfo bots = 1;
+}
+
+message BotInfo {
+
+}
+
+message BotCredentials {
+  string name = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Unique bot name."}];
+
+  optional string api_key = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Coordinator API key."}];
+}
+
+message BotConnectionInfo {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      description: "Connection credentials for bot to connect to the Redis queue and start listening for new tasks from coordinator."
+    }
+  };
+
+  string queue_pool = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Redis queue pool name."}];
+  string queue_password = 2  [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Redis queue pool password."}];
+}

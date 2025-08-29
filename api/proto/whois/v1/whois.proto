@@ -1,23 +1,16 @@
 syntax = "proto3";
-package whois.v1;
+package domsnail.whois.v1;
 
-option go_package = "github.com/domsnail/core-api-lib/api/proto/whois/v1";
+option go_package = "github.com/domsnail/core-api-lib/gen/go/api/proto/whois/v1;whoisv1";
+
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/empty.proto";
-import "google/api/annotations.proto";
-import "google/openapiv2/annotations.proto";
-import "google/openapiv2/openapiv2.proto";
-import "hosts/v1/host.proto";
+import "api/proto/host/v1/host.proto";
 
 message ProbeOptions {
-  bool response_required = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    example: "false"
-    description: "Требуется ли синхронный ответ"
-  }];
-
-  repeated hosts.v1.Host hosts = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Список хостов для сканирования"
+  hosts.v1.Host host = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Host to be scanned"
   }];;
 }
 
