@@ -25,8 +25,8 @@ export interface Host {
  * https://stackoverflow.com/questions/51395679/what-is-the-most-efficient-protobuf-type-in-c-for-storing-ipv4-or-ipv6-addre
  */
 export interface IPAddress {
-  v4?: number | undefined;
-  v6?: Uint8Array | undefined;
+  v4?: string | undefined;
+  v6?: string | undefined;
 }
 
 function createBaseHost(): Host {
@@ -160,10 +160,10 @@ function createBaseIPAddress(): IPAddress {
 export const IPAddress: MessageFns<IPAddress> = {
   encode(message: IPAddress, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.v4 !== undefined) {
-      writer.uint32(13).fixed32(message.v4);
+      writer.uint32(10).string(message.v4);
     }
     if (message.v6 !== undefined) {
-      writer.uint32(18).bytes(message.v6);
+      writer.uint32(18).string(message.v6);
     }
     return writer;
   },
@@ -176,11 +176,11 @@ export const IPAddress: MessageFns<IPAddress> = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1: {
-          if (tag !== 13) {
+          if (tag !== 10) {
             break;
           }
 
-          message.v4 = reader.fixed32();
+          message.v4 = reader.string();
           continue;
         }
         case 2: {
@@ -188,7 +188,7 @@ export const IPAddress: MessageFns<IPAddress> = {
             break;
           }
 
-          message.v6 = reader.bytes();
+          message.v6 = reader.string();
           continue;
         }
       }
@@ -202,18 +202,18 @@ export const IPAddress: MessageFns<IPAddress> = {
 
   fromJSON(object: any): IPAddress {
     return {
-      v4: isSet(object.v4) ? globalThis.Number(object.v4) : undefined,
-      v6: isSet(object.v6) ? bytesFromBase64(object.v6) : undefined,
+      v4: isSet(object.v4) ? globalThis.String(object.v4) : undefined,
+      v6: isSet(object.v6) ? globalThis.String(object.v6) : undefined,
     };
   },
 
   toJSON(message: IPAddress): unknown {
     const obj: any = {};
     if (message.v4 !== undefined) {
-      obj.v4 = Math.round(message.v4);
+      obj.v4 = message.v4;
     }
     if (message.v6 !== undefined) {
-      obj.v6 = base64FromBytes(message.v6);
+      obj.v6 = message.v6;
     }
     return obj;
   },
@@ -228,31 +228,6 @@ export const IPAddress: MessageFns<IPAddress> = {
     return message;
   },
 };
-
-function bytesFromBase64(b64: string): Uint8Array {
-  if ((globalThis as any).Buffer) {
-    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
-  } else {
-    const bin = globalThis.atob(b64);
-    const arr = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; ++i) {
-      arr[i] = bin.charCodeAt(i);
-    }
-    return arr;
-  }
-}
-
-function base64FromBytes(arr: Uint8Array): string {
-  if ((globalThis as any).Buffer) {
-    return globalThis.Buffer.from(arr).toString("base64");
-  } else {
-    const bin: string[] = [];
-    arr.forEach((byte) => {
-      bin.push(globalThis.String.fromCharCode(byte));
-    });
-    return globalThis.btoa(bin.join(""));
-  }
-}
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 

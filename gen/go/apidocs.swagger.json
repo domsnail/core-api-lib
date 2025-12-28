@@ -209,15 +209,13 @@
             "name": "host.ip.v4",
             "in": "query",
             "required": false,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "host.ip.v6",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           }
         ],
         "tags": [
@@ -369,12 +367,10 @@
       "type": "object",
       "properties": {
         "v4": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "v6": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         }
       },
       "title": "IPv4 or IPv6 IP address\nhttps://stackoverflow.com/questions/51395679/what-is-the-most-efficient-protobuf-type-in-c-for-storing-ipv4-or-ipv6-addre"

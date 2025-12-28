@@ -19,7 +19,7 @@ message Host {
 // https://stackoverflow.com/questions/51395679/what-is-the-most-efficient-protobuf-type-in-c-for-storing-ipv4-or-ipv6-addre
 message IPAddress {
   oneof ip_addr {
-    fixed32 v4 = 1;
-    bytes v6 = 2;
+    string v4 = 1;
+    string v6 = 2;
   };
 }
